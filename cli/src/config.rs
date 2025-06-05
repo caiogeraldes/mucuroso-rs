@@ -24,7 +24,7 @@ mod tests {
     use std::env::home_dir;
 
     use super::*;
-    use toml;
+    
 
     #[test]
     fn config_tester() {

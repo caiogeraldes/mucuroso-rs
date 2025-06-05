@@ -43,7 +43,7 @@ fn main() {
 
     match &cli.command {
         Commands::Init { fit_file } => {
-            let mut fp = File::open(&fit_file).unwrap();
+            let mut fp = File::open(fit_file).unwrap();
             let db = FileDatabase::<Vec<SessionData>, Ron>::create_at_path(
                 config.db_file,
                 vec![SessionData::try_from_reader(&mut fp).unwrap()],
@@ -52,7 +52,7 @@ fn main() {
             db.save().unwrap();
         }
         Commands::Add { fit_file } => {
-            let mut fp = File::open(&fit_file).unwrap();
+            let mut fp = File::open(fit_file).unwrap();
             let session_data = SessionData::try_from_reader(&mut fp).unwrap();
 
             let db = FileDatabase::<Vec<SessionData>, Ron>::load_from_path(config.db_file).unwrap();
@@ -65,7 +65,7 @@ fn main() {
             db.save().unwrap();
         }
         Commands::Check { fit_file } => {
-            let mut fp = File::open(&fit_file).unwrap();
+            let mut fp = File::open(fit_file).unwrap();
             match SessionData::try_from_reader(&mut fp) {
                 Ok(_) => {
                     println!("File {:#?} is parsable", fit_file);

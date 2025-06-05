@@ -72,13 +72,13 @@ impl SessionData {
 
 impl SessionData {
     pub fn try_from_reader<T: Read>(mut source: T) -> Result<Self, anyhow::Error> {
-        Ok(SessionData::try_from(fitparser::from_reader(&mut source)?)?)
+        SessionData::try_from(fitparser::from_reader(&mut source)?)
     }
 }
 
 impl PartialOrd for SessionData {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        (&self.timestamp).partial_cmp(&other.timestamp)
+        Some(self.cmp(other))
     }
 }
 
@@ -86,6 +86,6 @@ impl Eq for SessionData {}
 
 impl Ord for SessionData {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        (&self.timestamp).partial_cmp(&other.timestamp).unwrap()
+        (self.timestamp).partial_cmp(&other.timestamp).unwrap()
     }
 }
