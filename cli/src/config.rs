@@ -4,6 +4,7 @@ use std::path::PathBuf;
 #[derive(Deserialize, Serialize, Debug)]
 pub(crate) struct Config {
     pub(crate) db_file: PathBuf,
+    pub(crate) keep_fit: bool,
 }
 
 /// `MyConfig` implements `Default`
@@ -15,7 +16,10 @@ impl ::std::default::Default for Config {
         } else {
             panic!("Eita")
         };
-        Self { db_file }
+        Self {
+            db_file,
+            keep_fit: true,
+        }
     }
 }
 
@@ -24,13 +28,13 @@ mod tests {
     use std::env::home_dir;
 
     use super::*;
-    
 
     #[test]
     fn config_tester() {
         let config: Config = toml::from_str(
             r#"
                 db_file = '/home/teste/teste.db'
+                keep_fit = true
             "#,
         )
         .unwrap();
