@@ -77,6 +77,16 @@ fn main() {
                 }
             }
         }
-        Commands::List => todo!(),
+        Commands::List => {
+            let db = FileDatabase::<Vec<SessionData>, Ron>::load_from_path(config.db_file).unwrap();
+            let sessions = db.read(|db| db.clone()).unwrap();
+            for (i, session) in sessions.into_iter().enumerate() {
+                println!(
+                    "Session {}: {}",
+                    i + 1,
+                    session.timestamp().format("%a %b %e %T %Y")
+                )
+            }
+        }
     }
 }
