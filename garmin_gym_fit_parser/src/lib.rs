@@ -12,7 +12,7 @@ mod test {
     #[test]
     fn general() {
         let mut fp = File::open("assets/19258265404_ACTIVITY.fit").unwrap();
-        let session_data = SessionData::try_from(fitparser::from_reader(&mut fp).unwrap()).unwrap();
+        let session_data = SessionData::try_from_reader(&mut fp).unwrap();
 
         dbg!(session_data.timestamp());
 

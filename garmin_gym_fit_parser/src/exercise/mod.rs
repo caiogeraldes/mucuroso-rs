@@ -4,7 +4,7 @@ use std::{collections::BTreeMap, fmt::Display};
 
 use crate::utils::parsers;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct ExerciseTitle {
     id: u16,
     title: String,

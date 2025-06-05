@@ -5,7 +5,7 @@ use fitparser::ValueWithUnits;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct Set {
     duration: Seconds,
     set_type: String,

@@ -6,7 +6,7 @@ pub trait Weight {
     fn to_pounds(self) -> Pounds;
 }
 
-#[derive(Debug, Deserialize, Serialize, Default, Clone)]
+#[derive(Debug, Deserialize, Serialize, Default, Clone, PartialEq)]
 pub(crate) struct Kilograms(f64);
 impl Weight for Kilograms {
     fn to_kilograms(self) -> Kilograms {

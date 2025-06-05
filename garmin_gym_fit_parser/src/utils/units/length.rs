@@ -30,7 +30,7 @@ impl Display for Centimiters {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize, Default)]
+#[derive(Debug, Deserialize, Serialize, Default, Clone, PartialEq)]
 pub(crate) struct Meters(f64);
 
 impl TryFrom<&str> for Meters {

@@ -5,7 +5,7 @@ use crate::utils::units::mass::{Kilograms, Pounds, Weight};
 use fitparser::ValueWithUnits;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
 pub struct User {
     name: String,
     height: Meters,

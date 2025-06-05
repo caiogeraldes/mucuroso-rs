@@ -1,3 +1,5 @@
+use std::io::Read;
+
 use crate::fitdata::FitDataMap;
 use crate::sets::Set;
 use crate::{exercise::ExerciseTitle, user::User};
@@ -5,7 +7,7 @@ use chrono::{DateTime, FixedOffset};
 use fitparser::FitDataRecord;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
 pub struct SessionData {
     timestamp: DateTime<FixedOffset>,
     exercise_titles: Vec<ExerciseTitle>,
@@ -65,5 +67,25 @@ impl SessionData {
 
     pub fn exercise_titles(&self) -> Vec<ExerciseTitle> {
         self.exercise_titles.clone()
+    }
+}
+
+impl SessionData {
+    pub fn try_from_reader<T: Read>(mut source: T) -> Result<Self, anyhow::Error> {
+        Ok(SessionData::try_from(fitparser::from_reader(&mut source)?)?)
+    }
+}
+
+impl PartialOrd for SessionData {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        (&self.timestamp).partial_cmp(&other.timestamp)
+    }
+}
+
+impl Eq for SessionData {}
+
+impl Ord for SessionData {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        (&self.timestamp).partial_cmp(&other.timestamp).unwrap()
     }
 }
