@@ -2,6 +2,9 @@
 name = "garmin_gym_fit_parser"
 version = "0.1.0"
 edition = "2024"
+authors = ["Caio Geraldes <caio.geraldes@usp.br>"]
+license = "MIT"
+description = "Lib to parse weightlifting sessions from Garmin Fit files"
 
 [dependencies]
 anyhow = "1.0.98"

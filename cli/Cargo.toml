@@ -2,6 +2,9 @@
 name = "mucuroso"
 version = "0.1.0"
 edition = "2024"
+authors = ["Caio Geraldes <caio.geraldes@usp.br>"]
+license = "MIT"
+description = "CLI to track weightlifting sessions from Garmin Fit files"
 
 [dependencies]
 clap = { version = "4.5.39", features = ["derive"] }
