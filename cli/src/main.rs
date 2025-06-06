@@ -87,7 +87,7 @@ fn main() {
                 println!("Session\tDate\t\t\t\tWeight");
                 for (i, session) in sessions.into_iter().enumerate() {
                     println!(
-                        "{}\t{}\t\t\t{}",
+                        "{}\t{}\t{}",
                         i + 1,
                         session.timestamp().format("%a %b %e %T %Y"),
                         session.total_weight()
