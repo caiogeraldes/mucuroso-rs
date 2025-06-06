@@ -1,7 +1,9 @@
+use crate::exercise::ExerciseTitle;
 use crate::utils::parsers;
 use crate::utils::units::{mass::Kilograms, time::Seconds};
 use chrono::{DateTime, FixedOffset};
 use fitparser::ValueWithUnits;
+use fitparser::profile::field_types::ExerciseCategory;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -18,8 +20,28 @@ pub struct Set {
     category_subtype_3: u16,
     weight_display_unit: String,
     weight: Option<Kilograms>,
-    repetitions: Option<u16>,
+    pub(crate) repetitions: u16,
     wkt_step_index: String,
+}
+
+impl Set {
+    pub fn weight(&self) -> Option<Kilograms> {
+        self.weight.clone()
+    }
+    pub fn total_weight(&self) -> Option<Kilograms> {
+        match self.weight() {
+            Some(w) => Some(w * self.repetitions),
+            None => None,
+        }
+    }
+    pub fn get_exercise_type(&self, options: &Vec<ExerciseTitle>) -> Option<ExerciseTitle> {
+        for option in options {
+            if option.id == self.category_1 {
+                return Some(option.clone());
+            }
+        }
+        None
+    }
 }
 
 impl TryFrom<BTreeMap<String, ValueWithUnits>> for Set {
@@ -51,7 +73,7 @@ impl TryFrom<BTreeMap<String, ValueWithUnits>> for Set {
                 "wkt_step_index" => set.wkt_step_index = field.1.to_string(),
                 "weight" => set.weight = Some(field.1.to_string().try_into()?),
                 "repetitions" => {
-                    set.repetitions = Some(parsers::unitless_u16_parser(field.1.to_string()))
+                    set.repetitions = parsers::unitless_u16_parser(field.1.to_string())
                 }
                 _ => (),
             }

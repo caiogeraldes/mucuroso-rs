@@ -8,8 +8,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
 pub struct User {
     name: String,
-    height: Meters,
-    weight: Kilograms,
+    pub(crate) height: Meters,
+    pub(crate) weight: Kilograms,
 }
 
 impl TryFrom<BTreeMap<String, ValueWithUnits>> for User {

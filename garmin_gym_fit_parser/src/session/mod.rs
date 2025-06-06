@@ -2,6 +2,7 @@ use std::io::Read;
 
 use crate::fitdata::FitDataMap;
 use crate::sets::Set;
+use crate::utils::units::mass::Kilograms;
 use crate::{exercise::ExerciseTitle, user::User};
 use chrono::{DateTime, FixedOffset};
 use fitparser::FitDataRecord;
@@ -73,6 +74,27 @@ impl SessionData {
 impl SessionData {
     pub fn try_from_reader<T: Read>(mut source: T) -> Result<Self, anyhow::Error> {
         SessionData::try_from(fitparser::from_reader(&mut source)?)
+    }
+
+    pub fn total_weight(&self) -> Kilograms {
+        let mut sum = Kilograms(0.0);
+        for set in &self.sets {
+            match set.total_weight() {
+                Some(w) => {
+                    sum = sum + w;
+                    dbg!(&sum);
+                }
+                None => match set.get_exercise_type(&self.exercise_titles) {
+                    Some(ExerciseTitle { category, .. }) => {
+                        if category != "cardio" {
+                            sum = self.user.weight.clone() * set.repetitions
+                        }
+                    }
+                    None => sum = sum,
+                },
+            }
+        }
+        sum
     }
 }
 

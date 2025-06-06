@@ -84,11 +84,13 @@ fn main() {
             let db = FileDatabase::<Vec<SessionData>, Ron>::load_from_path(config.db_file).unwrap();
             let sessions = db.read(|db| db.clone()).unwrap();
             if !sessions.is_empty() {
+                println!("Session\tDate\t\t\t\tWeight");
                 for (i, session) in sessions.into_iter().enumerate() {
                     println!(
-                        "Session {}: {}",
+                        "{}\t{}\t\t\t\t{}",
                         i + 1,
-                        session.timestamp().format("%a %b %e %T %Y")
+                        session.timestamp().format("%a %b %e %T %Y"),
+                        session.total_weight()
                     )
                 }
             } else {

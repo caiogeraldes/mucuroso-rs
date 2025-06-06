@@ -1,5 +1,10 @@
 use serde::{Deserialize, Serialize};
-use std::{fmt::Display, num::ParseFloatError};
+use std::{
+    fmt::Display,
+    iter::Sum,
+    num::ParseFloatError,
+    ops::{Add, Mul},
+};
 
 pub trait Weight {
     fn to_kilograms(self) -> Kilograms;
@@ -7,14 +12,27 @@ pub trait Weight {
 }
 
 #[derive(Debug, Deserialize, Serialize, Default, Clone, PartialEq)]
-pub(crate) struct Kilograms(f64);
+pub struct Kilograms(pub f64);
 impl Weight for Kilograms {
     fn to_kilograms(self) -> Kilograms {
         self
     }
-
     fn to_pounds(self) -> Pounds {
         Pounds(self.0 * (1.0 / 0.45359237))
+    }
+}
+
+impl Add for Kilograms {
+    type Output = Kilograms;
+    fn add(self, rhs: Self) -> Self::Output {
+        Kilograms(self.0 + rhs.0)
+    }
+}
+
+impl Mul<u16> for Kilograms {
+    type Output = Kilograms;
+    fn mul(self, rhs: u16) -> Self::Output {
+        Kilograms(self.0 * rhs as f64)
     }
 }
 
