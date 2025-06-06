@@ -82,7 +82,6 @@ impl SessionData {
             match set.total_weight() {
                 Some(w) => {
                     sum = sum + w;
-                    dbg!(&sum);
                 }
                 None => {
                     if let Some(ExerciseTitle { category, .. }) =
