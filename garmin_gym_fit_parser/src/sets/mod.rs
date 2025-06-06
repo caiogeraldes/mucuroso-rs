@@ -3,7 +3,6 @@ use crate::utils::parsers;
 use crate::utils::units::{mass::Kilograms, time::Seconds};
 use chrono::{DateTime, FixedOffset};
 use fitparser::ValueWithUnits;
-use fitparser::profile::field_types::ExerciseCategory;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -29,10 +28,7 @@ impl Set {
         self.weight.clone()
     }
     pub fn total_weight(&self) -> Option<Kilograms> {
-        match self.weight() {
-            Some(w) => Some(w * self.repetitions),
-            None => None,
-        }
+        self.weight().map(|w| w * self.repetitions)
     }
     pub fn get_exercise_type(&self, options: &Vec<ExerciseTitle>) -> Option<ExerciseTitle> {
         for option in options {

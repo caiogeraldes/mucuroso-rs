@@ -84,14 +84,15 @@ impl SessionData {
                     sum = sum + w;
                     dbg!(&sum);
                 }
-                None => match set.get_exercise_type(&self.exercise_titles) {
-                    Some(ExerciseTitle { category, .. }) => {
+                None => {
+                    if let Some(ExerciseTitle { category, .. }) =
+                        set.get_exercise_type(&self.exercise_titles)
+                    {
                         if category != "cardio" {
                             sum = self.user.weight.clone() * set.repetitions
                         }
                     }
-                    None => sum = sum,
-                },
+                }
             }
         }
         sum

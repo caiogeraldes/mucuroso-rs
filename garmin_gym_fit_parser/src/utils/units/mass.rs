@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
-    iter::Sum,
     num::ParseFloatError,
     ops::{Add, Mul},
 };
