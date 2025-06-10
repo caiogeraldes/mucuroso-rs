@@ -6,9 +6,9 @@ use crate::utils::parsers;
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct ExerciseTitle {
-    pub(crate) id: u16,
-    pub(crate) title: String,
-    pub(crate) category: String,
+    pub id: u16,
+    pub title: String,
+    pub category: String,
 }
 
 impl From<BTreeMap<String, ValueWithUnits>> for ExerciseTitle {
