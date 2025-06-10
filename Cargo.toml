@@ -1,5 +1,5 @@
 [workspace]
 resolver = "1"
 members = [ "cli",
-    "garmin_gym_fit_parser",
+    "garmin_gym_fit_parser", "mucuroso",
 ]
